@@ -9,7 +9,8 @@ require "simply_give.rb"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
-SimplyGive::CLI.new.call
+SimplyGive::API.new.get_causes
+
 
 require "irb"
 IRB.start(__FILE__)

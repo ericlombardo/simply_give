@@ -1,19 +1,11 @@
 require_relative './simply_give.rb'
+require 'httparty'
+require 'json'
 
 class SimplyGive::API   # interact with the API
-  attr_accessor :causes, :projects
-  
   def get_causes
-    @causes = %w[animals children climate democ disaster ecdev edu env gender]
-  end
-
-  def
-
-  def get_projects
-    @projects = %w[]
-  end
-
-  def get_organizations
-
+    response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes?api_key=")
+    # binding.pry
+    response["themes"].values # this gives you back an array of hashes with "id" and "name"
   end
 end
