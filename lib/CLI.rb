@@ -15,7 +15,7 @@ class SimplyGive::CLI   # interacts with the user
     list_causes
   end
 
-  def list_causes
+  def display_causes
     SimplyGive::API.new.get_causes.each.with_index(1) do |cause, index|
       puts "#{index}. #{cause}"
     end

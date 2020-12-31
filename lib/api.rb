@@ -7,6 +7,8 @@ class SimplyGive::API   # interact with the API
     @causes = %w[animals children climate democ disaster ecdev edu env gender]
   end
 
+  def
+
   def get_projects
     @projects = %w[]
   end
