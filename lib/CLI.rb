@@ -12,6 +12,12 @@ class SimplyGive::CLI   # interacts with the user
 
   def display_options
     puts "What cause would you like to give to?"
-    #list_causes # api class needs to get causes (themes) and then causes class needs to display causes
+    list_causes
+  end
+
+  def list_causes
+    SimplyGive::API.new.get_causes.each.with_index(1) do |cause, index|
+      puts "#{index}. #{cause}"
+    end
   end
 end

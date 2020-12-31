@@ -11,11 +11,8 @@
 
 - User types simply_give
 
-- Greeted and shown list of options
+- Greeted and shown list of causes
 
-  - You're one step away from simply giving to a project that you believe in. 
-    You can help fund a project by selecting one of the following.
-    1. List causes
-    2. Search by country
-    3. Search by state
-    4. Search by zip-code
+- Get all projects for a theme
+  - https://api.globalgiving.org/api/public/projectservice/themes/{themeId}/projects
+
