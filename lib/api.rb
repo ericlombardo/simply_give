@@ -17,7 +17,11 @@ class SimplyGive::API   # interact with the API
 
   def create_causes(themes)   # not making instance variable until creating instances of each cause
     # takes in hash of themes, iterates through each, creates a new cause with for each one with a name and id
-    
+    themes.each do |theme| # passing 1 hash with 'id' and 'name'
+      id = theme.values[0]
+      name = theme.values[1]
+      SimplyGive::Cause.new(id: id, name: name)
+    end
     #=> instances all instances of Cause class 
   end
 end
