@@ -44,6 +44,6 @@
 - Thank user for taking the time to look at helping others
 
 
-- Get all projects for a theme
-  - https://api.globalgiving.org/api/public/projectservice/themes/{themeId}/projects
+
+- Go through at end and check if attr_accessors should be just read or just write
 
