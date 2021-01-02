@@ -1,6 +1,5 @@
 require_relative './simply_give.rb'
 require 'httparty'
-require 'json'
 
 class SimplyGive::API   # interact with the API
   def get_causes
@@ -25,6 +24,21 @@ class SimplyGive::API   # interact with the API
   end
 
   def get_charities 
+    
+    response = HTTParty.get("https://api.globalgiving.org/api/public/orgservice/all/organizations/vetted?api_key=3484ce94-80d5-431a-b6fc-1d85cb940ee1&theme=children")
+    binding.pry
+    # state = response["organizations"]["organization"][0]["state"]
+    # country = response["organizations"]["organization"][0]["country"]
+    # name = response["organizations"]["organization"][0]["name"]
+    # mission = response["organizations"]["organization"][0]["mission"].split(/[."]/)[2]
+    # other_causes = response["organizations"]["organization"][0]["themes"]["theme"][0].values[1] this gets the first cause must loop through each one
+    # url = response["organizations"]["organization"][0]["url"]
+
+
+
+
+
+
     # hit API to get charities with chosen cause
     # get response into here with data
     # create charity instances for each of the charities
@@ -34,6 +48,3 @@ class SimplyGive::API   # interact with the API
 end
 
 
-# themes.each do |theme|    outputs the theme name
-  # puts theme.values[1]
-# end

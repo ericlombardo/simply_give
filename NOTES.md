@@ -44,6 +44,14 @@
 - Thank user for taking the time to look at helping others
 
 
+hit api and assign all charities with the cause to variable
+display the names from the variable with index
+when user selects the org
+  create instance of charity, collect info in instance variables, link to cause
+  show info and give link to donate
+
+
+
 See what is brought in when you import API (all or just the 10?)
 If just the ten
   see if you can get to 100

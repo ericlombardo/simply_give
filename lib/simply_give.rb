@@ -5,7 +5,9 @@ require_relative './api.rb'
 require_relative './cause.rb'
 
 module SimplyGive
-  class Error < StandardError; end
+  class Error < StandardError; 
   # Your code goes here...
+  end
+
 end
 
