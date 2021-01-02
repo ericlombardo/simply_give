@@ -72,5 +72,17 @@ Get All vetted orgs https://api.globalgiving.org/api/public/orgservice/all/organ
   &nextOrgId=335
 
 
+Refactor
 - Go through at end and check if attr_accessors should be just read or just write
+- got through and simplify names
+- find modules
+  - user input
+  - exit prompt puts, gets, executes if so
+  - clear screen
+- tap work anywhere to assign, do, and return?
+- {} instead of do end
+- check if instance variables need to be instance variables
 
+
+- get cli to display all charities in the a cause
+@charities.include?("hasNext") ? 1, count + 1 : 1, count

@@ -11,6 +11,5 @@ require "simply_give.rb"
 # Pry.start
 SimplyGive::CLI.new.call
 
-
 require "irb"
 IRB.start(__FILE__)
