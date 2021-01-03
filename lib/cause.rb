@@ -4,6 +4,7 @@ class SimplyGive::Cause
   attr_accessor :name, :id
 
   @@all = []
+  # set up charities class variable to keep track of all charities that belongs cause
   def initialize(id:, name:)  # using keyword arguments to help future programmers
     @name = name
     @id = id

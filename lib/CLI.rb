@@ -24,24 +24,22 @@ class SimplyGive::CLI   # interacts with the user
     puts "These charities contribute to #{SimplyGive::Cause.all[@cause_num - 1].name}. Select which you would like to review."
     display_charity_names
     get_charity_input_number
-    display_charity_info
   end
   
   def display_cause_names # show numbered list of cause names that are instances
-    SimplyGive::Cause.all.each.with_index(1) {|c, i| puts "#{i}. #{c.name}"}
+    SimplyGive::Cause.all.each.with_index(1) {|cause, ind| puts "#{ind}. #{cause.name}"}
   end
   
   def display_charity_names
-    @charities = get_charities_from_api["organizations"]
-    @charities["organization"].each.with_index(1) do |org, ind|
-      puts "#{ind}. #{org["name"]}"
+    # binding.pry
+    get_charities_from_api
+    SimplyGive::Charity.all.each.with_index(1) do |charity, ind|
+      puts "#{ind}. #{charity.name}"
     end
-    puts "#{@charities["organization"].count + 1}. See More Charities" if @charities["hasNext"] == "true"
+    puts "#{}"
   end
 
-  def display_charity_info
-    binding.pry
-  end
+
 
   def get_cause_input_number
     @cause_num = gets.strip.to_i   # gets input
@@ -50,7 +48,7 @@ class SimplyGive::CLI   # interacts with the user
 
   def get_charity_input_number
     @charity_num = gets.strip.to_i   # gets input
-    @charity_num.between?(1, @charities["organization"].count + 1) ? @charity_num : ask_for_charity
+    # @charity_num.between?(1, @charities["organization"].count + 1) ? @charity_num : ask_for_charity
   end
   
   def total_causes   # Gets length of all array in Cause class (1 dot rule)
@@ -58,10 +56,10 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def get_causes_from_api   
-    @causes = SimplyGive::API.new.get_causes
+    SimplyGive::API.new.get_causes
   end
 
   def get_charities_from_api
-    @charities = SimplyGive::API.new.get_charities(cause_num: @cause_num - 1)
+    SimplyGive::API.new.get_charities(SimplyGive::Cause.all[@cause_num - 1])
   end 
 end

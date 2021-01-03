@@ -13,20 +13,24 @@ class SimplyGive::API   # interact with the API
     themes.each do |theme| # passing 1 hash with 'id' and 'name'
       id = theme.values[0]
       name = theme.values[1]
-      SimplyGive::Cause.new(id: id, name: name)
+      SimplyGive::Cause.new(id: id, name: name) 
     end
     #=> instances all instances of Cause class 
   end
 
-  def get_charities(cause_num:)
-    # next_page = "&nextOrgId=" + next_page if next_page != ""
-    response = HTTParty.get("https://api.globalgiving.org/api/public/orgservice/all/organizations/vetted?api_key=&theme=" + "#{SimplyGive::Cause.all[cause_num].id}")
-    # state = response["organizations"]["organization"][0]["state"]
-    # country = response["organizations"]["organization"][0]["country"]
-    # name = response["organizations"]["organization"][0]["name"]
+  def get_charities(cause)
+    binding.pry
+    response = HTTParty.get("https://api.globalgiving.org/api/public/orgservice/all/organizations/vetted?api_key=&theme=" + "#{cause.id}")
+    response["organizations"]["organization"].select do |org|
+      SimplyGive::Charity.new(org["name"]).tap { |charity| 
+        charity.country = org["country"]
+        charity.mission = org["mission"]
+        charity.url = org["url"]}
+   
+
+    end
     # mission = response["organizations"]["organization"][0]["mission"].split(/[."]/)[2]
     # other_causes = response["organizations"]["organization"][0]["themes"]["theme"][0].values[1] this gets the first cause must loop through each one
-    # url = response["organizations"]["organization"][0]["url"]
   end
 end
 

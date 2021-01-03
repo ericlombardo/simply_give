@@ -44,32 +44,14 @@
 - Thank user for taking the time to look at helping others
 
 
-hit api and assign all charities with the cause to variable
-display the names from the variable with index
-when user selects the org
-  create instance of charity, collect info in instance variables, link to cause
-  show info and give link to donate
 
+See how to include something in the .gitignore folder => add notes and api key
+brings in 10 at a time
+  create instances with info, link to cuase and charity
+- get charities to push instance to cause
+- get causes to push instance to charity
 
-
-See what is brought in when you import API (all or just the 10?)
-If just the ten
-  see if you can get to 100
-    create instances of charities for each
-    collect info 
-    display name
-    give next page option at end
-    if next page is chosen
-      hit API for next
-      repeat process until no more pages
-  loop through and create instances of each charity for cause
-Create all instances and see how long that takes for largest cause
-
-Get All vetted orgs https://api.globalgiving.org/api/public/orgservice/all/organizations/vetted
-  add parameters of theme at the end after key
-  &theme=children
-  go to next parameter using nextOrgId at top of results
-  &nextOrgId=335
+@charities.include?("hasNext") ? 1, count + 1 : 1, count
 
 
 Refactor
@@ -82,7 +64,6 @@ Refactor
 - tap work anywhere to assign, do, and return?
 - {} instead of do end
 - check if instance variables need to be instance variables
+- create helper method to simplify seeing charity from cause eco.charities.name.ect becomes eco.    charity_names
 
 
-- get cli to display all charities in the a cause
-@charities.include?("hasNext") ? 1, count + 1 : 1, count
