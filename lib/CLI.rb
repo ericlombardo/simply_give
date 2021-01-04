@@ -1,12 +1,12 @@
 require_relative './simply_give.rb'
 
 class SimplyGive::CLI   # interacts with the user
-  attr_accessor :cause_num, :charities, :charity_num
+  attr_accessor :cause_num, :charity_num
   
   def call
     greet_user
     ask_for_cause
-    ask_for_charity
+    ask_for_projects
   end
   
   def greet_user
@@ -20,9 +20,9 @@ class SimplyGive::CLI   # interacts with the user
     get_cause_input_number
   end
   
-  def ask_for_charity # displays instances of charities within cause, prompts answer, gets input until valid?
-    puts "These charities contribute to #{SimplyGive::Cause.all[@cause_num - 1].name}. Select which you would like to review."
-    display_charity_names
+  def ask_for_projects # displays instances of charities within cause, prompts answer, gets input until valid?
+    puts "These projects are working to help with #{SimplyGive::Cause.all[@cause_num - 1].name}. \nSelect which you would like to review."
+    display_project_names
     get_charity_input_number
   end
   
@@ -30,18 +30,18 @@ class SimplyGive::CLI   # interacts with the user
     SimplyGive::Cause.all.each.with_index(1) {|cause, ind| puts "#{ind}. #{cause.name}"}
   end
   
-  def display_charity_names
-    get_charities_from_api
-    SimplyGive::Charity.all.each.with_index(1) do |charity, ind|
+  def display_project_names
+    get_projects_from_api
+    SimplyGive::Charity.all.each.with_index(1) do |project, ind|
       puts "#{ind}. #{charity.name}"
     end
   end
-
+  
   def get_cause_input_number
     @cause_num = gets.strip.to_i   # gets input
     @cause_num.between?(1, total_causes) ? @cause_num : ask_for_cause  # ask_for_cause until match, return input when it does
   end
-
+  
   def get_charity_input_number
     @charity_num = gets.strip.to_i 
   end
@@ -49,12 +49,13 @@ class SimplyGive::CLI   # interacts with the user
   def total_causes   # Gets length of all array in Cause class (1 dot rule)
     SimplyGive::Cause.all.count
   end
-
+  
   def get_causes_from_api   
     SimplyGive::API.new.get_causes
   end
-
-  def get_charities_from_api
-    SimplyGive::API.new.get_charities(SimplyGive::Cause.all[@cause_num - 1])
+  
+  def get_projects_from_api
+    binding.pry
+    SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num - 1])
   end 
 end
