@@ -29,8 +29,6 @@ class SimplyGive::Charity
       charity.url = org["url"]
       charity_causes = Array.try_convert(org["themes"]["theme"]) == nil ? org["themes"]["theme"]["name"] : org["themes"]["theme"].collect {|t| t["name"]}
       charity.causes = (charity.causes + SimplyGive::Cause.all.find_all {|cause| charity_causes.include?(cause.name)}).uniq
-      binding.pry
-      
     end
   end
 

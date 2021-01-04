@@ -1,7 +1,7 @@
 require_relative './simply_give.rb'
 require 'httparty'
 
-class SimplyGive::API   # interact with the API
+class SimplyGive::API < SimplyGive::APIKey  # interact with the API
   def get_causes
     response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes?api_key=" + api_key)
     themes = response["themes"].values.flatten # this gives you back an array of hashes with "id" and "name"
@@ -16,8 +16,9 @@ class SimplyGive::API   # interact with the API
     end
   end
 
-  def get_charities(cause)
-    response = HTTParty.get("https://api.globalgiving.org/api/public/orgservice/all/organizations/vetted?api_key=" + api_key + "&theme=" + "#{cause.id}")
+  def get_charities(cause)      
+    binding.pry
+    response = HTTParty.get("https://api.globalgiving.org/api/public/orgservice/all/organizations/vetted?api_key=" + api_key)
     SimplyGive::Charity.create_from_api(response)
   end
 end
