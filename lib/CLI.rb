@@ -10,12 +10,12 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def greet_user
-    puts "Weclcome to Simply Give!"
+    puts "Weclcome to Simply Give! Where you can give to projects and charities you love."
   end
   
   def ask_for_cause
     puts "What cause would you like to view?"
-    get_causes_from_api
+    get_causes_from_api if SimplyGive::Cause.all.empty?
     display_cause_names
     get_cause_input_number
   end
