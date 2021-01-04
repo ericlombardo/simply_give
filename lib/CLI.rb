@@ -31,15 +31,11 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def display_charity_names
-    # binding.pry
     get_charities_from_api
     SimplyGive::Charity.all.each.with_index(1) do |charity, ind|
       puts "#{ind}. #{charity.name}"
     end
-    puts "#{}"
   end
-
-
 
   def get_cause_input_number
     @cause_num = gets.strip.to_i   # gets input
@@ -47,8 +43,7 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def get_charity_input_number
-    @charity_num = gets.strip.to_i   # gets input
-    # @charity_num.between?(1, @charities["organization"].count + 1) ? @charity_num : ask_for_charity
+    @charity_num = gets.strip.to_i 
   end
   
   def total_causes   # Gets length of all array in Cause class (1 dot rule)
