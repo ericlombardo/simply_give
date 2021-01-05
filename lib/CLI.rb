@@ -23,7 +23,6 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def ask_for_project # displays instances of charities within cause, prompts answer, gets input until valid?
-    binding.pry
     puts "These projects are working to help with #{SimplyGive::Cause.all[@cause_num - 1].name}. 
     \nSelect which you would like to review. (1 - #{@project_set.count})"
     display_project_names
@@ -48,6 +47,20 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def display_project_info
+    project = @project_set[@project_num - 1]
+    puts "Charity: #{project.charity.name}"
+    puts "Project: #{project.name}"    
+    puts
+    puts "Status: #{project.status}\nStarted: #{project.start_date}\nGoal: #{project.goal}\nRaised: #{project.funds_raised}"
+    puts 
+    puts "Project Description:"
+    puts "#{project.description}"
+    puts 
+    puts "Other causes this charity supports"
+    project.causes.each.with_index(1) {|cause, ind| (puts "#{ind}. #{cause.name}")}
+    
+    puts "Simply Give to this project by clicking the link below"
+    puts project.project_link
     
   end
   
