@@ -3,7 +3,7 @@ require 'httparty'
 
 class SimplyGive::API < SimplyGive::APIKey  # interact with the API
   def get_causes
-    response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes?api_key=" + api_key)
+    response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes" + api_key)
     themes = response["themes"].values.flatten # this gives you back an array of hashes with "id" and "name"
     create_causes(themes)
   end
@@ -16,10 +16,14 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
     end
   end
 
-  def get_projects(cause)      
-    binding.pry
-    response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/#{cause.id}/projects/active" + api_key)
-    SimplyGive::Charity.create_from_api(response)
+  def get_projects(cause)
+    response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes/#{cause.id}/projects/active" + api_key)
+    # binding.pry
+    response["projects"]["project"].each do |project|
+      SimplyGive::Project.create(project["title"])
+    end
+    # send to Project Class
+    
   end
 end
 

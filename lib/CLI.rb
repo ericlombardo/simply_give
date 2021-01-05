@@ -55,7 +55,7 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def get_projects_from_api
-    binding.pry
+    # binding.pry
     SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num - 1])
   end 
 end
