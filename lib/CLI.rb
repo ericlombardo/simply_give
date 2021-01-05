@@ -1,12 +1,14 @@
 require_relative './simply_give.rb'
 
 class SimplyGive::CLI   # interacts with the user
-  attr_accessor :cause_num, :charity_num
+  attr_accessor :cause_num, :project_num
   
   def call
     greet_user
     ask_for_cause
     ask_for_projects
+    binding.pry
+    user_selects_project
   end
   
   def greet_user
@@ -23,17 +25,21 @@ class SimplyGive::CLI   # interacts with the user
   def ask_for_projects # displays instances of charities within cause, prompts answer, gets input until valid?
     puts "These projects are working to help with #{SimplyGive::Cause.all[@cause_num - 1].name}. \nSelect which you would like to review."
     display_project_names
-    get_charity_input_number
+    get_project_input_number
   end
   
+  def user_selects_project
+    get_project_input_number
+  end
+
   def display_cause_names # show numbered list of cause names that are instances
     SimplyGive::Cause.all.each.with_index(1) {|cause, ind| puts "#{ind}. #{cause.name}"}
   end
   
   def display_project_names
     get_projects_from_api
-    SimplyGive::Charity.all.each.with_index(1) do |project, ind|
-      puts "#{ind}. #{charity.name}"
+    SimplyGive::Project.all.each.with_index(1) do |project, ind|
+      puts "#{ind}. #{project.charity.name}"
     end
   end
   
@@ -42,10 +48,14 @@ class SimplyGive::CLI   # interacts with the user
     @cause_num.between?(1, total_causes) ? @cause_num : ask_for_cause  # ask_for_cause until match, return input when it does
   end
   
-  def get_charity_input_number
-    @charity_num = gets.strip.to_i 
+  def get_project_input_number
+    @project_num = gets.strip.to_i 
   end
+
+  def get_project_input_num
   
+  end
+
   def total_causes   # Gets length of all array in Cause class (1 dot rule)
     SimplyGive::Cause.all.count
   end

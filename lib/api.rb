@@ -31,13 +31,13 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
       new_project.progress_report = project["progressReportLink"]
       new_project.project_link = project["projectLink"]
       new_project.start_date = project["approvedDate"].slice(/.{10}/)
-      new_project.charity_name = SimplyGive::Charity.new(project["organization"]["name"]).tap do |org|
+      new_project.charity = SimplyGive::Charity.new(project["organization"]["name"]).tap do |org|
         org.state = project["organization"]["state"]
         org.country = project["organization"]["country"]
         org.mission = project["organization"]["mission"]   # dig deaper for below
         org.url = project["organization"]["url"]
       end
-      binding.pry
+      # binding.pry
       SimplyGive::Cause.all.each do |cause|
         if !causes.is_a?(Array)
           new_project.causes << cause if cause.id == causes["id"]

@@ -1,13 +1,13 @@
 require_relative './simply_give.rb'
 
 class SimplyGive::Cause
-  attr_accessor :name, :id, :charities
+  attr_accessor :name, :id
 
   @@all = []
   def initialize(id:, name:)  # using keyword arguments to help future programmers
     @name = name
     @id = id
-    @charities = [] 
+    @projects = [] 
     save
   end
 
