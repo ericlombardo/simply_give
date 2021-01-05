@@ -20,6 +20,3 @@ class SimplyGive::Cause
   end
 end
 
-# when charity is created go through causes it wants to help
-# link each charity instance to the cause
-# make sure you don't have doubles
