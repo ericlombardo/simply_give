@@ -19,6 +19,7 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
   def get_projects(cause)
     response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes/#{cause.id}/projects/active" + api_key)
     projects = response["projects"]["project"]
+    return_value = []
     projects.each do |project|
       # binding.pry
       causes = project["organization"]["themes"]["theme"]
@@ -36,8 +37,8 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
         org.country = project["organization"]["country"]
         org.mission = project["organization"]["mission"]   # dig deaper for below
         org.url = project["organization"]["url"]
+
       end
-      # binding.pry
       SimplyGive::Cause.all.each do |cause|
         if !causes.is_a?(Array)
           new_project.causes << cause if cause.id == causes["id"]
@@ -47,7 +48,9 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
           end
         end
       end
+      return_value << new_project
     end
+    return return_value
   end
 end
 
