@@ -2,6 +2,12 @@ require_relative './simply_give.rb'
 require 'httparty'
 
 class SimplyGive::API < SimplyGive::APIKey  # interact with the API
+  
+  @@next_page = nil
+
+  def self.next_page
+    @@next_page
+  end
   def get_causes
     response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes" + api_key)
     themes = response["themes"].values.flatten # this gives you back an array of hashes with "id" and "name"
@@ -16,12 +22,16 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
     end
   end
 
-  def get_projects(cause)
-    response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes/#{cause.id}/projects/active" + api_key)
+  def get_projects(cause, next_page = nil)
+    if next_page == nil
+      response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes/#{cause.id}/projects/active" + api_key)
+    else
+      response = HTTParty.get("https://api.globalgiving.org/api/public/projectservice/themes/#{cause.id}/projects/active" + api_key + "&nextProjectId=" + next_page)
+    end
+    response["projects"]["hasNext"] == "true" ? @@next_page = response["projects"]["nextProjectId"] : nil
     projects = response["projects"]["project"]
-    return_value = []
+    return_value = [] # look into tap to eliminate this
     projects.each do |project|
-      # binding.pry
       causes = project["organization"]["themes"]["theme"]
       new_project = SimplyGive::Project.new(project["title"])
       new_project.description = project["summary"]
@@ -37,7 +47,6 @@ class SimplyGive::API < SimplyGive::APIKey  # interact with the API
         org.country = project["organization"]["country"]
         org.mission = project["organization"]["mission"]   # dig deaper for below
         org.url = project["organization"]["url"]
-
       end
       SimplyGive::Cause.all.each do |cause|
         if !causes.is_a?(Array)
