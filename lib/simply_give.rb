@@ -2,6 +2,7 @@ require "bundler/setup"
 
 # require gems first
 require 'pry'
+require 'watir'
 
 # require models
 require_relative './api_keys.rb'

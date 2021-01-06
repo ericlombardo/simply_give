@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'pry', '~> 0.13.1'
   spec.add_dependency 'httparty'
+  spec.add_dependency 'watir'
 end

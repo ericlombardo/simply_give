@@ -1,25 +1,45 @@
 require_relative './simply_give.rb'
+require 'watir'
 
 class SimplyGive::CLI   # interacts with the user
-  attr_accessor :cause_num, :project_num, :project_set
+  attr_accessor :cause_num, :project_num, :project_set, :project
   
   def call
-    greet_user
-    ask_for_cause
-    ask_for_project
-    display_project_info
+    start_from_menu
   end
   
+  def start_from_menu
+    greet_user
+    start_from_causes
+  end
+
+  def start_from_causes
+    ask_for_cause
+    start_from_projects
+  end
+
+  def start_from_projects
+    ask_for_project
+    display_project_info
+    next_steps
+  end
+
   def greet_user
     puts "             Weclcome to Simply Give!"                              
-    puts "Where you can give to projects and charities you love." # 26 half way
+    puts "Where you can give to projects and charities you love." #54
     puts
-    get_causes_from_api if SimplyGive::Cause.all.empty?
-    sleep(4)
+    puts "                  Navigation Tips:"
+    puts "              * Enter 'm' to view menu"
+    puts "         * Enter 'p' to view other projects"
+    puts "                * Enter 'e' to exit"
+    puts
+    puts "  * Press 'enter' to start your Simply Give experience"
+    gets.strip
   end
   
   def ask_for_cause
-    puts "         What cause would you like to view?" # 17
+    get_causes_from_api if SimplyGive::Cause.all.empty?
+    puts "         What cause would you like to view?"
     puts
     display_cause_names
     get_cause_input_number
@@ -27,14 +47,13 @@ class SimplyGive::CLI   # interacts with the user
   
   def ask_for_project # displays instances of charities within cause, prompts answer, gets input until valid?
     @project_set = get_projects_from_api 
-    puts "These projects are working to help with #{SimplyGive::Cause.all[@cause_num - 1].name}."
+    puts "These projects are working to help with #{SimplyGive::Cause.all[@cause_num.to_i - 1].name}."
     puts
     display_project_names
     get_project_input_number
   end
 
   def display_cause_names # show numbered list of cause names that are instances
-    binding.pry
     SimplyGive::Cause.all.each.with_index(1) {|cause, ind| puts "              #{ind}. #{cause.name}"}
   end
   
@@ -54,7 +73,7 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def display_project_info
-    project = @project_set[@project_num - 1]
+    @project = @project_set[@project_num.to_i - 1]
     puts "Charity: #{project.charity.name}"
     puts "Project: #{project.name}"    
     puts
@@ -70,21 +89,43 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def get_cause_input_number
-    @cause_num = gets.strip.to_i   # gets input
-    @cause_num.between?(1, total_causes) ? @cause_num : ask_for_cause  # ask_for_cause until match, return input when it does
+    @cause_num = gets.strip   # gets input
+    if @cause_num == "p"
+      system("clear")
+      puts "Please select a cause to view projects"
+      sleep(2)
+      system("clear")
+      start_from_causes
+    end
+    check_input(@cause_num)
+    @cause_num.to_i.between?(1, total_causes) ? @cause_num : ask_for_cause  # ask_for_cause until match, return input when it does
   end
   
   def get_project_input_number
-    @project_num = gets.strip.to_i
-    if @project_num == @project_set.count + 1
-      ask_for_project
-    elsif @project_num.between?(1, @project_set.count + 1)
-      @project_num
-    else
-      display_project_names
-      get_project_input_number
+    @project_num = gets.strip
+    check_input(@project_num)
+    start_from_projects if @project_num == @project_set.count + 1
+    @project_num.to_i.between?(1, @project_set.count) ? @project_num : start_from_projects
+  end
+
+  def next_steps  # Ask for next step. Go to site or back or exit
+    puts "Enter 'g' to simply give or navigate to another menu"
+    input = gets.strip.downcase
+    check_input(input)
+    if input == "g"
+      system("open", project.project_link)
     end
-    # if @project_num == @project_set.count + 1
+  end
+
+  def check_input(input) # checks for exit, causes, or projects
+    input = input.downcase
+    if input == "e"
+      exit
+    elsif input == "m" || input == "s"
+      start_from_causes
+    elsif input == "p"
+      start_from_projects
+    end
   end
 
   def total_causes   # Gets length of all array in Cause class 
@@ -96,6 +137,7 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def get_projects_from_api
-    SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num - 1], SimplyGive::API.next_page)
+    SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num.to_i - 1], SimplyGive::API.next_page)
   end 
+
 end
