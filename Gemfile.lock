@@ -2,14 +2,14 @@ PATH
   remote: .
   specs:
     simply_give (0.1.0)
+      colorize
       httparty
-      watir
 
 GEM
   remote: https://rubygems.org/
   specs:
-    childprocess (3.0.0)
     coderay (1.1.3)
+    colorize (0.8.1)
     diff-lcs (1.4.4)
     httparty (0.18.1)
       mime-types (~> 3.0)
@@ -23,7 +23,6 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     rake (12.3.2)
-    regexp_parser (1.8.2)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -37,13 +36,6 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.0)
-    rubyzip (2.3.0)
-    selenium-webdriver (3.142.7)
-      childprocess (>= 0.5, < 4.0)
-      rubyzip (>= 1.2.2)
-    watir (6.17.0)
-      regexp_parser (~> 1.2)
-      selenium-webdriver (~> 3.6)
 
 PLATFORMS
   ruby

@@ -1,14 +1,9 @@
 require_relative './simply_give.rb'
-require 'watir'
 
 class SimplyGive::CLI   # interacts with the user
   attr_accessor :cause_num, :project_num, :project_set, :project
   
   def call
-    start_from_menu
-  end
-  
-  def start_from_menu
     greet_user
     start_from_causes
   end
@@ -25,10 +20,12 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def greet_user
-    puts "             Weclcome to Simply Give!"                              
+    giving_heart
+    puts "             Weclcome to Simply Give!".colors                              
     puts "Where you can give to projects and charities you love." #54
     puts
     puts "                  Navigation Tips:"
+    puts "    Please make screen width of image to view properly"
     puts "              * Enter 'm' to view menu"
     puts "         * Enter 'p' to view other projects"
     puts "                * Enter 'e' to exit"
@@ -40,7 +37,6 @@ class SimplyGive::CLI   # interacts with the user
   def ask_for_cause
     get_causes_from_api if SimplyGive::Cause.all.empty?
     puts "         What cause would you like to view?"
-    puts
     display_cause_names
     get_cause_input_number
   end
@@ -84,21 +80,17 @@ class SimplyGive::CLI   # interacts with the user
     puts 
     puts "Other causes this charity supports"
     project.causes.each.with_index(1) {|cause, ind| (puts "#{ind}. #{cause.name}")}
-    puts "Simply Give to this project by clicking the link below"
-    puts project.project_link
   end
   
   def get_cause_input_number
     @cause_num = gets.strip   # gets input
     if @cause_num == "p"
-      system("clear")
       puts "Please select a cause to view projects"
-      sleep(2)
-      system("clear")
       start_from_causes
     end
     check_input(@cause_num)
-    @cause_num.to_i.between?(1, total_causes) ? @cause_num : ask_for_cause  # ask_for_cause until match, return input when it does
+    @cause_num.to_i.between?(1, total_causes) ? @cause_num : start_from_causes  # ask_for_cause until match, return input when it does
+
   end
   
   def get_project_input_number
@@ -121,9 +113,10 @@ class SimplyGive::CLI   # interacts with the user
     input = input.downcase
     if input == "e"
       exit
-    elsif input == "m" || input == "s"
+    elsif input == "m"
       start_from_causes
     elsif input == "p"
+   
       start_from_projects
     end
   end
@@ -140,4 +133,21 @@ class SimplyGive::CLI   # interacts with the user
     SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num.to_i - 1], SimplyGive::API.next_page)
   end 
 
+  def giving_heart
+    puts "     ......................................"
+    puts "     ....:kXWMMMMMNOl:  :lONMMMMMWXx:......"
+    puts "     ...:l0WMMMMMMMMMXo..oXMMMMMMMMMW0l:..."
+    puts "     ..:OWMMMMMMMMMMMMXOOXMMMMMMMMMMMMWO:.."
+    puts "     ..:c0MMMMMMMMMMMMMMMMMMMMMMMMMMMM0c:.."
+    puts "     ..:OMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO:.."
+    puts "     ...:dNMMMMMMMMMMMMMMMMMMMMMMMMMMXo:..."
+    puts "     ....:xNMMMMMMMMMMMMMMMMMMMMMMMMXd:...."
+    puts "     .....:dKWMMMMMMMMMMMMMMMMMMMMW0o:....."
+    puts "     ......:cxXWMMMMMMMMMMMMMMMMWKd:......."
+    puts "     ........:cxXWMMMMMMMMMMMMW0d:........."
+    puts "     ..........:cdKWMMMMMMMMN0o:..........."
+    puts "     ............:o0NMMMMMNOl:............."
+    puts "     ..............:oONNOo:................"
+    puts "     ............... :dd:.................."          
+  end
 end
