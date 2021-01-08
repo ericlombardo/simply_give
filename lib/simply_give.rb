@@ -1,8 +1,8 @@
 require "bundler/setup"
 
 # require gems first
-require 'pry'
 require 'colorize'
+require 'pry'
 # require models
 require_relative './api_keys.rb'
 require_relative "./simply_give/version"

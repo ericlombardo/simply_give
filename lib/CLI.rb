@@ -4,6 +4,7 @@ class SimplyGive::CLI   # interacts with the user
   attr_accessor :cause_num, :project_num, :project_set, :project
   
   def call
+    welcome_screen
     greet_user
     start_from_causes
   end
@@ -20,72 +21,98 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def greet_user
-    giving_heart
-    puts "             Weclcome to Simply Give!".colors                              
-    puts "Where you can give to projects and charities you love." #54
     puts
-    puts "                  Navigation Tips:"
-    puts "    Please make screen width of image to view properly"
-    puts "              * Enter 'm' to view menu"
-    puts "         * Enter 'p' to view other projects"
-    puts "                * Enter 'e' to exit"
+    long_divider
+    puts "     __ _                 _           ___ _           ".colorize(:light_cyan)
+    puts "    / _(_)_ __ ___  _ __ | |_   _    / _ (_)_   _____ ".colorize(:light_cyan)
+    puts "    \\"" \\""| | '_ ` _ ""\\""| '_ ""\\""| | | | |  / /_""\\""/ ""\\"" ""\\"" / / _ ""\\".colorize(:light_cyan)
+    puts "    _""\\"" ""\\"" | | | | | | |_) | | |_| | / /_""\\""\\""| |""\\"" V /  __/".colorize(:light_cyan)
+    puts "    \\""__/_|_| |_| |_| .__/|_|""\\""__, | ""\\""____/|_| ""\\""_/ ""\\""___|".colorize(:light_cyan)
+    puts "                   |_|      |___/                     ".colorize(:light_cyan) 
+    puts                           
+    puts " " * 2 + "WHERE YOU CAN GIVE TO PROJECTS AND CHARITIES YOU LOVE.".colorize(:light_white) #54
+    puts 
+    short_divider
+    puts 
+    puts " " * 21 + "NAVIGATION TIPS:".colorize(:light_cyan)
+    puts "              * Enter ".colorize(:light_white) + "'m'".colorize(:light_red) + " to view menu".colorize(:light_white)
+    puts "         * Enter ".colorize(:light_white) + "'p'".colorize(:light_red) + " to view other projects".colorize(:light_white)
+    puts "                * Enter ".colorize(:light_white) + "'e'".colorize(:light_red) + " to exit".colorize(:light_white)
     puts
-    puts "  * Press 'enter' to start your Simply Give experience"
+    puts "  * Press 'enter' to start your Simply Give experience".colorize(:light_white)
     gets.strip
   end
   
   def ask_for_cause
     get_causes_from_api if SimplyGive::Cause.all.empty?
-    puts "         What cause would you like to view?"
+    puts
+    puts " " * 9 + "SELECT WHAT CAUSE YOU ARE INTERESTED IN".colorize(:light_cyan)
+    short_divider
+    puts
     display_cause_names
     get_cause_input_number
   end
   
   def ask_for_project # displays instances of charities within cause, prompts answer, gets input until valid?
+    puts " "
+    binding.pry
     @project_set = get_projects_from_api 
-    puts "These projects are working to help with #{SimplyGive::Cause.all[@cause_num.to_i - 1].name}."
+    binding.pry
+    puts "#{SimplyGive::Cause.all[@cause_num.to_i - 1].name.upcase}".colorize(:light_cyan)
+    puts "SELECT TO VIEW DETAILS".colorize(:light_cyan)
+    puts
+    short_divider
     puts
     display_project_names
     get_project_input_number
   end
 
   def display_cause_names # show numbered list of cause names that are instances
-    SimplyGive::Cause.all.each.with_index(1) {|cause, ind| puts "              #{ind}. #{cause.name}"}
+    SimplyGive::Cause.all.each.with_index(1) {|cause, ind| puts "              #{ind}.".colorize(:light_red) + " #{cause.name}".colorize(:light_white)}
   end
   
   def display_project_names
-    puts "Select which you would like to review. (1 - #{@project_set.count})"
     case @project_set.count
     when 0
-      puts "No active projects listed for this cause."
+      puts "No active projects listed for this cause.".colorize(:light_white)
     when 1
-      puts "#{@project_set.count}. #{@project_set.name}"
+      puts "#{@project_set.count}.".colorize(:light_red) +  "#{@project_set.name}".colorize(:light_white)
     else
       @project_set.each.with_index(1) do |project, ind|
-        puts "#{ind}. #{project.name}"
+        puts "#{ind}.".colorize(:light_red) +  " #{project.name}".colorize(:light_white)
       end
     end
-    puts "#{@project_set.count + 1}. To See More Projects" if SimplyGive::API.next_page != nil
+    puts "#{@project_set.count + 1}.".colorize(:light_red) +  " To See More Projects".colorize(:light_white) if SimplyGive::API.next_page != nil
   end
 
   def display_project_info
     @project = @project_set[@project_num.to_i - 1]
-    puts "Charity: #{project.charity.name}"
-    puts "Project: #{project.name}"    
+
+    puts "CHARITY:".colorize(:light_cyan) + " #{project.charity.name}".colorize(:light_white)
+    puts 
+    puts long_divider
     puts
-    puts "Status: #{project.status}\nStarted: #{project.start_date}\nGoal: #{project.goal}\nRaised: #{project.funds_raised}"
+    puts "PROJECT DESCRIPTION:".colorize(:light_cyan)
+    puts "#{project.description}".colorize(:light_white)
+    puts
+    long_divider
+    puts
+    puts "RAISED:".colorize(:light_cyan) + " $#{project.funds_raised} / $#{project.goal}".colorize(:light_white)
     puts 
-    puts "Project Description:"
-    puts "#{project.description}"
-    puts 
-    puts "Other causes this charity supports"
-    project.causes.each.with_index(1) {|cause, ind| (puts "#{ind}. #{cause.name}")}
+    long_divider
+    puts
+    puts "OTHER CAUSES THIS CHARITY SUPPORTS".colorize(:light_cyan)
+    puts
+    long_divider
+    puts
+    project.causes.each.with_index(1) {|cause, ind| (puts "#{ind}.".colorize(:light_red) + " #{cause.name}".colorize(:light_white))}
+    puts
   end
   
   def get_cause_input_number
     @cause_num = gets.strip   # gets input
     if @cause_num == "p"
-      puts "Please select a cause to view projects"
+      puts "Please select a cause to view projects".colorize(:light_white)
       start_from_causes
     end
     check_input(@cause_num)
@@ -101,7 +128,8 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def next_steps  # Ask for next step. Go to site or back or exit
-    puts "Enter 'g' to simply give or navigate to another menu"
+    puts
+    puts "Enter ".colorize(:light_white) + "'g'".colorize(:light_red) + " to simply give".colorize(:light_white)
     input = gets.strip.downcase
     check_input(input)
     if input == "g"
@@ -133,21 +161,50 @@ class SimplyGive::CLI   # interacts with the user
     SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num.to_i - 1], SimplyGive::API.next_page)
   end 
 
-  def giving_heart
-    puts "     ......................................"
-    puts "     ....:kXWMMMMMNOl:  :lONMMMMMWXx:......"
-    puts "     ...:l0WMMMMMMMMMXo..oXMMMMMMMMMW0l:..."
-    puts "     ..:OWMMMMMMMMMMMMXOOXMMMMMMMMMMMMWO:.."
-    puts "     ..:c0MMMMMMMMMMMMMMMMMMMMMMMMMMMM0c:.."
-    puts "     ..:OMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO:.."
-    puts "     ...:dNMMMMMMMMMMMMMMMMMMMMMMMMMMXo:..."
-    puts "     ....:xNMMMMMMMMMMMMMMMMMMMMMMMMXd:...."
-    puts "     .....:dKWMMMMMMMMMMMMMMMMMMMMW0o:....."
-    puts "     ......:cxXWMMMMMMMMMMMMMMMMWKd:......."
-    puts "     ........:cxXWMMMMMMMMMMMMW0d:........."
-    puts "     ..........:cdKWMMMMMMMMN0o:..........."
-    puts "     ............:o0NMMMMMNOl:............."
-    puts "     ..............:oONNOo:................"
-    puts "     ............... :dd:.................."          
+  def long_divider
+    puts " " * 2 + "><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><".colorize(:light_white)
+  end
+
+  def short_divider
+    puts " " * 13 + "><*><*><*><*><*><*><*><*><*><*><".colorize(:light_white)
+  end
+
+  def welcome_screen
+    puts
+    puts " " * 6 + "Please make window 57 x 32 for optimal viewing".colorize(:light_white)
+    puts " " * 16 + "Press 'enter' to continue"
+    gets.strip
+    puts "   __    __     _                            ______     "
+    puts "  / / /""\\"" ""\\"" ""\\""___| | ___ ___  _ __ ___   ___  /__  __|__  "
+    puts "  ""\\"" ""\\""/  ""\\""/ / _ ""\\"" |/ __/ _ ""\\""| '_ ` _ ""\\"" / _ ""\\""   / / / _ ""\\"" "
+    puts "   ""\\""  /""\\""  /  __/ | (_| (_) | | | | | |  __/  / / | (_) |"
+    puts "    ""\\""/  ""\\""/ ""\\""___|_|""\\""___""\\""___/|_| |_| |_|""\\""___|  ""\\""/   ""\\""___/ "
+    puts                                                                                                                                 
+    puts "        ......................................".colorize(:light_cyan)
+    puts "        .....".colorize(:light_cyan) + ":::::::::::".colorize(:red) + "......".colorize(:light_cyan) + ":::::::::::".colorize(:red) + ".....".colorize(:light_cyan)
+    puts "        ...".colorize(:light_cyan) + "::".colorize(:red) + "kXWMMMMMMNl".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan) + "::".colorize(:red) + "lONMMMMMWXx".colorize(:red) + "::".colorize(:red) + "...".colorize(:light_cyan)
+    puts "        ..".colorize(:light_cyan) + "::".colorize(:red) + "l0WMMMMMMMMMXo".colorize(:red) + "::".colorize(:red) + "oXMMMMMMMMMW0l".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan)
+    puts "        .".colorize(:light_cyan) + "::".colorize(:red) + "OWMMMMMMMMMMMMXOOXMMMMMMMMMMMMWO".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
+    puts "        .".colorize(:light_cyan) + "::".colorize(:red) + "c0MMMMMMMMMMMMMMMMMMMMMMMMMMMM0c".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
+    puts "        .".colorize(:light_cyan) + "::".colorize(:red) + "OMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
+    puts "        ..".colorize(:light_cyan) + "::".colorize(:red) + "dNMMMMMMMMMMMMMMMMMMMMMMMMMMXo".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan)
+    puts "        ...".colorize(:light_cyan) + "::".colorize(:red) + "xNMMMMMMMMMMMMMMMMMMMMMMMMXd".colorize(:red) + "::".colorize(:red) + "...".colorize(:light_cyan)
+    puts "        ....".colorize(:light_cyan) + "::".colorize(:red) + "dKWMMMMMMMMMMMMMMMMMMMMW0o".colorize(:red) + "::".colorize(:red) + "....".colorize(:light_cyan)
+    puts "        .....".colorize(:light_cyan) + "::".colorize(:red) + "cxXWMMMMMMMMMMMMMMMMWKd".colorize(:red) + "::".colorize(:red) + "......".colorize(:light_cyan)
+    puts "        .......".colorize(:light_cyan) + "::".colorize(:red) + "cxXWMMMMMMMMMMMMW0d".colorize(:red) + "::".colorize(:red) + "........".colorize(:light_cyan)
+    puts "        .........".colorize(:light_cyan) + "::".colorize(:red) + "cdKWMMMMMMMMN0o".colorize(:red) + "::".colorize(:red) + "..........".colorize(:light_cyan)
+    puts "        ...........".colorize(:light_cyan) + "::".colorize(:red) + "o0NMMMMMNOl".colorize(:red) + "::".colorize(:red) + "............".colorize(:light_cyan)
+    puts "        .............".colorize(:light_cyan) + "::".colorize(:red) + "oONNOo".colorize(:red) + "::".colorize(:red) + "...............".colorize(:light_cyan)
+    puts "        ...............".colorize(:light_cyan) + "::".colorize(:red) + "dd".colorize(:red) + "::".colorize(:red) + ".................".colorize(:light_cyan)
+    puts "        .................".colorize(:light_cyan) + "::".colorize(:red) + "...................".colorize(:light_cyan)
+    puts "        ......................................".colorize(:light_cyan)                                                                                          
+    puts    
+    puts "   __ _                 _           ___ _           ".colorize(:light_white)
+    puts "  / _(_)_ __ ___  _ __ | |_   _    / _ (_)_   _____ ".colorize(:light_white)
+    puts "  \\"" \\""| | '_ ` _ ""\\""| '_ ""\\""| | | | |  / /_""\\""/ ""\\"" ""\\"" / / _ ""\\".colorize(:light_white)
+    puts "  _""\\"" ""\\"" | | | | | | |_) | | |_| | / /_""\\""\\""| |""\\"" V /  __/".colorize(:light_white)
+    puts "  \\""__/_|_| |_| |_| .__/|_|""\\""__, | ""\\""____/|_| ""\\""_/ ""\\""___|".colorize(:light_white)
+    puts "                 |_|      |___/                     ".colorize(:light_white)
+    sleep(5)
   end
 end
