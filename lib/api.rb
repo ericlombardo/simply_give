@@ -1,4 +1,4 @@
-require_relative './simply_give.rb'
+require_relative '../config/environment.rb'
 require 'httparty'
 
 class SimplyGive::API < SimplyGive::APIKey  # interact with the API

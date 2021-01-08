@@ -1,4 +1,4 @@
-require_relative './simply_give.rb'
+require_relative '../config/environment.rb'
 
 class SimplyGive::Charity
   attr_accessor :name, :state, :country, :mission, :url

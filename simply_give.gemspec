@@ -1,4 +1,4 @@
-require_relative 'lib/simply_give/version'
+require_relative 'lib/concerns/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "simply_give"
