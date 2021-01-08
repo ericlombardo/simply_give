@@ -55,9 +55,7 @@ class SimplyGive::CLI   # interacts with the user
   
   def ask_for_project # displays instances of charities within cause, prompts answer, gets input until valid?
     puts " "
-    binding.pry
     @project_set = get_projects_from_api 
-    binding.pry
     puts "#{SimplyGive::Cause.all[@cause_num.to_i - 1].name.upcase}".colorize(:light_cyan)
     puts "SELECT TO VIEW DETAILS".colorize(:light_cyan)
     puts
@@ -101,7 +99,7 @@ class SimplyGive::CLI   # interacts with the user
     puts 
     long_divider
     puts
-    puts "OTHER CAUSES THIS CHARITY SUPPORTS".colorize(:light_cyan)
+    puts "ALL CAUSES THIS CHARITY SUPPORTS".colorize(:light_cyan)
     puts
     long_divider
     puts
@@ -158,7 +156,7 @@ class SimplyGive::CLI   # interacts with the user
   end
   
   def get_projects_from_api
-    SimplyGive::API.new.get_projects(SimplyGive::Cause.all[@cause_num.to_i - 1], SimplyGive::API.next_page)
+    SimplyGive::API.new.get_projects(cause: SimplyGive::Cause.all[@cause_num.to_i - 1], next_page: SimplyGive::API.next_page)
   end 
 
   def long_divider
