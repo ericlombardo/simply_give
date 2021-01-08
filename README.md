@@ -14,7 +14,7 @@ Clone the git repo onto your computer
 Go into the root directory of the folder in your terminal and execute:
 
     $ bundle install
-    ![]()
+![](lib/images/bundle_install.png)
 Once the install has completed you can then execute:
 
     $ ./bin/simply_give
