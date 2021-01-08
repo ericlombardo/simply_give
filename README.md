@@ -1,9 +1,9 @@
 # SimplyGive
 
-Simply Give was designed to help people who want to give to causes that they beleive in,
-but don't know what all their options are. This solves that problem with a simple interface
-that allows the user to search thousands of causes and hundreds of charities that are doing
-good in the world and need our help. When you find a project or charity that you align with,
+Simply Give was designed to help people who want to give to causes that they beleive in
+but don't know what all their options are. This program solves that problem by giving the
+user a easy to navigate interface that give them access to thousands of projects that charities
+are currently working on. When you find a project or charity that you align with,
 you are taken directly to the project site (on Global Giving website) or directly to the
 charities website where you give to the cause.
 
@@ -14,7 +14,6 @@ Clone the git repo onto your computer
 Go into the root directory of the folder in your terminal and execute:
 
     $ bundle install
-![](lib/images/bundle_install.png)
 Once the install has completed you can then execute:
 
     $ ./bin/simply_give
@@ -38,7 +37,7 @@ Or install it yourself as:
 Upon launching the program you will be prompted to adjust the screen to the optimal size. After this, the program starts and you are able to choose a cause you want to find projects in. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
 
 ## Build Status
-Simply Give is up and functional to use. 
+While Simply Give is up and runnning there are many features that I would like to incorporate in the future. I would like to include a way to search by regions, track donations in an external file, and create person instances to expand the usability of the program.
 
 ## Development
 
