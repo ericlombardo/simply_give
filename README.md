@@ -1,11 +1,11 @@
 # SimplyGive
 
-Simply Give was designed to help people who want to give to causes that they beleive in
-but don't know what all their options are. This program solves that problem by giving the
-user a easy to navigate interface that give them access to thousands of projects that charities
-are currently working on. When you find a project or charity that you align with,
+Simply Give was designed to help people who want to give to causes that they beleive in,
+but don't know where to start. This program aims to solves that problem by providing a
+user friendly interface with access to thousands of projects that charities
+are currently working on. When you find a project or charity that speaks to you,
 you are taken directly to the project site (on Global Giving website) or directly to the
-charities website where you give to the cause.
+charity's website where you Simply Give to the cause.
 
 ## Installation
 
@@ -17,15 +17,17 @@ Go into the root directory of the folder (files should include)
 
 ![](lib/images/folder_files.png)
 
-Once there execute:
+Once there, run program by executeing:
+
+    $ ./bin/simply_give
+
+
+<!-- Once there execute:
 
     $ bundle install
    ![](lib/images/bundle_install.png)
-    
+     -->
 
-Once the install is complete, run program by executeing:
-
-    $ ./bin/simply_give
 
 <!-- Add this line to your application's Gemfile:
 
@@ -43,14 +45,14 @@ Or install it yourself as:
 
 ## Usage
 
-Upon launching the program you will be prompted to adjust the screen to the optimal size. 
+Upon launching the program you will be prompted to adjust the screen to the optimal size to make sure you can see the edges of the border. 
 
-![](lib/images/adjust_size.png)
+![](lib/images/adjust_size.png) INSERT PICTURE OF BORDER
 
-After this, the program starts and you are able to choose a cause you want to find projects in. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
+After this, the program starts and you are able to view projects by selecting a cause. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
 
 ## Build Status
-While Simply Give is up and runnning there are many features that I would like to incorporate in the future. I would like to include a way to search by regions, track donations in an external file, and create person instances to expand the usability of the program.
+While Simply Give is up and fully functional, there are features that I would like to incorporate in the future. I would like to include a way to search by regions, track donations in an external file, and create person instances to expand the usability of the program.
 
 ## Development
 

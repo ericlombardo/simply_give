@@ -148,15 +148,15 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def long_divider
-    puts
+    space
     text("><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><", :light_red)
-    puts
+    space
   end
 
   def short_divider
-    puts
+    space
     text("><*><*><*><*><*><*><*><*><*><*><", :light_red)
-    puts
+    space
   end
 
   def simply_give_logo
