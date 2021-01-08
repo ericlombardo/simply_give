@@ -11,10 +11,19 @@ charities website where you give to the cause.
 
 Clone the git repo onto your computer
 
-Go into the root directory of the folder in your terminal and execute:
+![](lib/images/clone.png)
+
+Go into the root directory of the folder (files should include)
+
+![](lib/images/folder_files.png)
+
+Once there execute:
 
     $ bundle install
-Once the install has completed you can then execute:
+   ![](lib/images/bundle_install.png)
+    
+
+Once the install is complete, run program by executeing:
 
     $ ./bin/simply_give
 
@@ -34,7 +43,11 @@ Or install it yourself as:
 
 ## Usage
 
-Upon launching the program you will be prompted to adjust the screen to the optimal size. After this, the program starts and you are able to choose a cause you want to find projects in. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
+Upon launching the program you will be prompted to adjust the screen to the optimal size. 
+
+![](lib/images/adjust_size.png)
+
+After this, the program starts and you are able to choose a cause you want to find projects in. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
 
 ## Build Status
 While Simply Give is up and runnning there are many features that I would like to incorporate in the future. I would like to include a way to search by regions, track donations in an external file, and create person instances to expand the usability of the program.
@@ -57,3 +70,8 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the SimplyGive project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ericlombardo/simply_give/blob/master/CODE_OF_CONDUCT.md).
+
+## Attribution
+
+The API used in this program was from Global Giving and can be found at: https://www.globalgiving.org/
+
