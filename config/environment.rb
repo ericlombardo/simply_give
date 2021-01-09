@@ -5,8 +5,8 @@ require 'colorize'
 require 'pry'
 # require models
 require_relative '../lib/api_keys.rb'
-require_relative "../lib/concerns/version"
 require_relative '../lib/api.rb'
+require_relative "../lib/concerns/version"
 require_relative '../lib/cause.rb'
 require_relative '../lib/charity.rb'
 require_relative '../lib/project.rb'

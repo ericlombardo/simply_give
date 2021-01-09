@@ -2,23 +2,27 @@ require_relative '../config/environment.rb'
 
 class SimplyGive::CLI   # interacts with the user
 
-  attr_accessor :cause_num, :project_num, :project_set, :project
+  attr_accessor :cause_num, :project_num, :project_set, :project, :turn_page
   
   API = SimplyGive::API
   CAUSE = SimplyGive::Cause
   
   def call
-      welcome
-      show_causes
+    system("clear")  
+    welcome
+    show_causes
   end       
   
   def show_causes
+    system("clear")
     get_cause
+    system("clear")
     show_projects
   end  
   
   def show_projects
     get_project
+    system("clear")
     show_project_info
   end
   
@@ -33,25 +37,21 @@ class SimplyGive::CLI   # interacts with the user
   
   def get_project # displays instances of charities within cause, prompts answer, gets input until valid?
     space
-    @project_set = get_projects_from_api 
+    @project_set = get_projects_from_api unless @turn_page == false
     text("SELECT TO SEE DETAILS OF PROJECTS THAT HELP WITH", :light_cyan)
     text("#{@cause_num}", :light_cyan)
     short_divider
     display_project_names
+    @turn_page = true
     get_project_input_number
   end
   
   def display_project_names
-    case @project_set.count
-    when 0
-      text("No active projects listed for this cause.", :light_white)
-    when 1
-      text("#{@project_set.count}. #{@project_set.name}", :light_white)
-    else
-      @project_set.each.with_index(1) do |project, ind|
-        text("#{ind}. #{project.name}", :light_white)
-      end
-    end
+    text("No active projects listed for this cause.", :light_white) if @project_set.count == 0
+
+    @project_set.count == 1 ? text("1. #{@project_set[0].name}", :light_white) : 
+    @project_set.each.with_index(1) {|proj, ind| text("#{ind}. #{proj.name}", :light_white)}
+    
     text("#{@project_set.count + 1}. To See More Projects", :light_white) if API.next_page != nil
   end
 
@@ -76,6 +76,7 @@ class SimplyGive::CLI   # interacts with the user
     @cause_num = gets.strip   # gets input
     if @cause_num == "p"
       text("Please select a cause to view projects", :light_white)
+      sleep(2)
       show_causes
     end
     check_input(@cause_num)
@@ -85,10 +86,10 @@ class SimplyGive::CLI   # interacts with the user
   def get_project_input_number
     @project = gets.strip
     check_input(@project)
-    show_projects if @project == @project_set.count + 1
-    @project.to_i.between?(1, @project_set.count) ? @project = @project_set[@project.to_i - 1] : show_projects
+    system("clear") ;show_projects if @project.to_i == @project_set.count + 1
+    @project.to_i.between?(1, @project_set.count) ? @project = @project_set[@project.to_i - 1] : @turn_page = false ;show_projects
   end
-
+  
   def next_steps  # Ask for next step. Go to site or back or exit
     space
     puts "Enter ".colorize(:light_white) + "'g'".colorize(:light_red) + " to simply give".colorize(:light_white)
@@ -106,6 +107,7 @@ class SimplyGive::CLI   # interacts with the user
     when "m"
       show_causes
     when "p"
+      system("clear")
       show_projects
     end
   end
@@ -134,6 +136,7 @@ class SimplyGive::CLI   # interacts with the user
   def welcome
     border_logo   # display border to set screen size
     gets
+    system("clear")
     space
     welcome_logo
     space                                                                                                                                 
@@ -141,6 +144,7 @@ class SimplyGive::CLI   # interacts with the user
     space    
     simply_give_logo
     sleep(4)
+    system("clear")
   end
   
   def space(count: 1)
