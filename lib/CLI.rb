@@ -102,9 +102,9 @@ class SimplyGive::CLI   # interacts with the user
 
   def check_input(input) # checks for exit, causes, or projects
     case input.downcase
-    when "e"
+    when "q"
       exit
-    when "m"
+    when "c"
       show_causes
     when "p"
       system("clear")
@@ -125,7 +125,8 @@ class SimplyGive::CLI   # interacts with the user
   end 
 
   def text(text, color)   # not using keywords to try to clean up code
-    center_text = (57 - text.length) / 2
+    width = 79
+    center_text = (width - text.length) / 2
     puts " " * center_text + text.colorize(color)
   end
 
@@ -134,7 +135,7 @@ class SimplyGive::CLI   # interacts with the user
   # GRAPHICS AND DISPLAY PATTERNS
   # ==================================================================================
   def welcome
-    border_logo   # display border to set screen size
+    border_logo  # display border to set screen size
     gets
     system("clear")
     space
@@ -164,75 +165,83 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def simply_give_logo
-    puts "     __ _                 _           ___ _           ".colorize(:light_white)
-    puts "    / _(_)_ __ ___  _ __ | |_   _    / _ (_)_   _____ ".colorize(:light_white)
-    puts "    \\"" \\""| | '_ ` _ ""\\""| '_ ""\\""| | | | |  / /_""\\""/ ""\\"" ""\\"" / / _ ""\\".colorize(:light_white)
-    puts "    _""\\"" ""\\"" | | | | | | |_) | | |_| | / /_""\\""\\""| |""\\"" V /  __/".colorize(:light_white)
-    puts "    \\""__/_|_| |_| |_| .__/|_|""\\""__, | ""\\""____/|_| ""\\""_/ ""\\""___|".colorize(:light_white)
-    puts "                   |_|      |___/                     ".colorize(:light_white) 
+    text(" __ _                 _           ___ _           ", :light_white)
+    text("/ _(_)_ __ ___  _ __ | |_   _    / _ (_)_   _____ ", :light_white)
+    text("\\"" \\""| | '_ ` _ ""\\""| '_ ""\\""| | | | |  / /_""\\""/ ""\\"" ""\\"" / / _ ""\\", :light_white)
+    text("_""\\"" ""\\"" | | | | | | |_) | | |_| | / /_""\\""\\""| |""\\"" V /  __/", :light_white)
+    text("\\""__/_|_| |_| |_| .__/|_|""\\""__, | ""\\""____/|_| ""\\""_/ ""\\""___|", :light_white)
+    text("               |_|      |___/                     ", :light_white)
   end
 
   def welcome_logo
-    puts "   __    __     _                            ______     ".colorize(:light_white)
-    puts "  / / /""\\"" ""\\"" ""\\""___| | ___ ___  _ __ ___   ___  /__  __|__  ".colorize(:light_white)
-    puts "  ""\\"" ""\\""/  ""\\""/ / _ ""\\"" |/ __/ _ ""\\""| '_ ` _ ""\\"" / _ ""\\""   / / / _ ""\\"" ".colorize(:light_white)
-    puts "   ""\\""  /""\\""  /  __/ | (_| (_) | | | | | |  __/  / / | (_) |".colorize(:light_white)
-    puts "    ""\\""/  ""\\""/ ""\\""___|_|""\\""___""\\""___/|_| |_| |_|""\\""___|  ""\\""/   ""\\""___/ ".colorize(:light_white)
+    text(" __    __     _                            ______     ", :light_white)
+    text("/ / /""\\"" ""\\"" ""\\""___| | ___ ___  _ __ ___   ___  /__  __|__  ", :light_white)
+    text("""\\"" ""\\""/  ""\\""/ / _ ""\\"" |/ __/ _ ""\\""| '_ ` _ ""\\"" / _ ""\\""   / / / _ ""\\"" ", :light_white)
+    text(" ""\\""  /""\\""  /  __/ | (_| (_) | | | | | |  __/  / / | (_) |", :light_white)
+    text("  ""\\""/  ""\\""/ ""\\""___|_|""\\""___""\\""___/|_| |_| |_|""\\""___|  ""\\""/   ""\\""___/ ", :light_white)
   end
 
   def heart_logo
-    puts "        ......................................".colorize(:light_cyan)
-    puts "        .....".colorize(:light_cyan) + ":::::::::::".colorize(:red) + "......".colorize(:light_cyan) + ":::::::::::".colorize(:red) + ".....".colorize(:light_cyan)
-    puts "        ...".colorize(:light_cyan) + "::".colorize(:red) + "kXWMMMMMMNl".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan) + "::".colorize(:red) + "lONMMMMMWXx".colorize(:red) + "::".colorize(:red) + "...".colorize(:light_cyan)
-    puts "        ..".colorize(:light_cyan) + "::".colorize(:red) + "l0WMMMMMMMMMXo".colorize(:red) + "::".colorize(:red) + "oXMMMMMMMMMW0l".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan)
-    puts "        .".colorize(:light_cyan) + "::".colorize(:red) + "OWMMMMMMMMMMMMXOOXMMMMMMMMMMMMWO".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
-    puts "        .".colorize(:light_cyan) + "::".colorize(:red) + "c0MMMMMMMMMMMMMMMMMMMMMMMMMMMM0c".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
-    puts "        .".colorize(:light_cyan) + "::".colorize(:red) + "OMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
-    puts "        ..".colorize(:light_cyan) + "::".colorize(:red) + "dNMMMMMMMMMMMMMMMMMMMMMMMMMMXo".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan)
-    puts "        ...".colorize(:light_cyan) + "::".colorize(:red) + "xNMMMMMMMMMMMMMMMMMMMMMMMMXd".colorize(:red) + "::".colorize(:red) + "...".colorize(:light_cyan)
-    puts "        ....".colorize(:light_cyan) + "::".colorize(:red) + "dKWMMMMMMMMMMMMMMMMMMMMW0o".colorize(:red) + "::".colorize(:red) + "....".colorize(:light_cyan)
-    puts "        .....".colorize(:light_cyan) + "::".colorize(:red) + "cxXWMMMMMMMMMMMMMMMMWKd".colorize(:red) + "::".colorize(:red) + "......".colorize(:light_cyan)
-    puts "        .......".colorize(:light_cyan) + "::".colorize(:red) + "cxXWMMMMMMMMMMMMW0d".colorize(:red) + "::".colorize(:red) + "........".colorize(:light_cyan)
-    puts "        .........".colorize(:light_cyan) + "::".colorize(:red) + "cdKWMMMMMMMMN0o".colorize(:red) + "::".colorize(:red) + "..........".colorize(:light_cyan)
-    puts "        ...........".colorize(:light_cyan) + "::".colorize(:red) + "o0NMMMMMNOl".colorize(:red) + "::".colorize(:red) + "............".colorize(:light_cyan)
-    puts "        .............".colorize(:light_cyan) + "::".colorize(:red) + "oONNOo".colorize(:red) + "::".colorize(:red) + "...............".colorize(:light_cyan)
-    puts "        ...............".colorize(:light_cyan) + "::".colorize(:red) + "dd".colorize(:red) + "::".colorize(:red) + ".................".colorize(:light_cyan)
-    puts "        .................".colorize(:light_cyan) + "::".colorize(:red) + "...................".colorize(:light_cyan)
-    puts "        ......................................".colorize(:light_cyan) 
+    puts " " * 20 + "......................................".colorize(:light_cyan)
+    puts " " * 20 + ".....".colorize(:light_cyan) + ":::::::::::".colorize(:red) + "......".colorize(:light_cyan) + ":::::::::::".colorize(:red) + ".....".colorize(:light_cyan)
+    puts " " * 20 + "...".colorize(:light_cyan) + "::".colorize(:red) + "kXWMMMMMMNl".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan) + "::".colorize(:red) + "lONMMMMMWXx".colorize(:red) + "::".colorize(:red) + "...".colorize(:light_cyan)
+    puts " " * 20 + "..".colorize(:light_cyan) + "::".colorize(:red) + "l0WMMMMMMMMMXo".colorize(:red) + "::".colorize(:red) + "oXMMMMMMMMMW0l".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan)
+    puts " " * 20 + ".".colorize(:light_cyan) + "::".colorize(:red) + "OWMMMMMMMMMMMMXOOXMMMMMMMMMMMMWO".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
+    puts " " * 20 + ".".colorize(:light_cyan) + "::".colorize(:red) + "c0MMMMMMMMMMMMMMMMMMMMMMMMMMMM0c".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
+    puts " " * 20 + ".".colorize(:light_cyan) + "::".colorize(:red) + "OMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO".colorize(:red) + "::".colorize(:red) + ".".colorize(:light_cyan)
+    puts " " * 20 + "..".colorize(:light_cyan) + "::".colorize(:red) + "dNMMMMMMMMMMMMMMMMMMMMMMMMMMXo".colorize(:red) + "::".colorize(:red) + "..".colorize(:light_cyan)
+    puts " " * 20 + "...".colorize(:light_cyan) + "::".colorize(:red) + "xNMMMMMMMMMMMMMMMMMMMMMMMMXd".colorize(:red) + "::".colorize(:red) + "...".colorize(:light_cyan)
+    puts " " * 20 + "....".colorize(:light_cyan) + "::".colorize(:red) + "dKWMMMMMMMMMMMMMMMMMMMMW0o".colorize(:red) + "::".colorize(:red) + "....".colorize(:light_cyan)
+    puts " " * 20 + ".....".colorize(:light_cyan) + "::".colorize(:red) + "cxXWMMMMMMMMMMMMMMMMWKd".colorize(:red) + "::".colorize(:red) + "......".colorize(:light_cyan)
+    puts " " * 20 + ".......".colorize(:light_cyan) + "::".colorize(:red) + "cxXWMMMMMMMMMMMMW0d".colorize(:red) + "::".colorize(:red) + "........".colorize(:light_cyan)
+    puts " " * 20 + ".........".colorize(:light_cyan) + "::".colorize(:red) + "cdKWMMMMMMMMN0o".colorize(:red) + "::".colorize(:red) + "..........".colorize(:light_cyan)
+    puts " " * 20 + "...........".colorize(:light_cyan) + "::".colorize(:red) + "o0NMMMMMNOl".colorize(:red) + "::".colorize(:red) + "............".colorize(:light_cyan)
+    puts " " * 20 + ".............".colorize(:light_cyan) + "::".colorize(:red) + "oONNOo".colorize(:red) + "::".colorize(:red) + "...............".colorize(:light_cyan)
+    puts " " * 20 + "...............".colorize(:light_cyan) + "::".colorize(:red) + "dd".colorize(:red) + "::".colorize(:red) + ".................".colorize(:light_cyan)
+    puts " " * 20 + ".................".colorize(:light_cyan) + "::".colorize(:red) + "...................".colorize(:light_cyan)
+    puts " " * 20 + "......................................".colorize(:light_cyan) 
   end
 
   def border_logo
-    puts " .--..--..--..--..--..--..--..--..--..--..-..--..--..--.".colorize(:light_cyan)
-    puts "/ .. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"". ""\\"".. ""\\"".. ""\\"".. ""\\""".colorize(:light_cyan)
-    puts "\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""//""\\""/ /""\\""/ /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /`' /`' /`' /`' /`' /`' /`' /`' /`' `' /`' /""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/`--'`--'`--'`--'`--'`--'`--'`--'`--'--'`--'""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts """\\"" ""\\""/""\\"" ""\\""                                           /""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\"" ""\\""                                         / /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /                                         ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/                                           ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts """\\"" ""\\""/""\\"" ""\\""                                           /""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\"" ""\\".colorize(:light_cyan) + "        PLEASE MAKE SURE YOU CAN".colorize(:light_white) + "         / /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /".colorize(:light_cyan) + "         SEE THE ENTIRE BOARDER".colorize(:light_white) + "          ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/".colorize(:light_cyan) +  "             FOR BEST VIEWING".colorize(:light_white) + "              ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts "\\"" " "\\""/""\\"" ""\\".colorize(:light_cyan) + "           PRESS ENTER TO START".colorize(:light_white) + "            /""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\"" ""\\""                                         / /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /                                         ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/                                           ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts """\\"" ""\\""/""\\"" ""\\""                                           /""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\"" ""\\""                                         / /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /                                         ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/                                           ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts """\\"" ""\\""/""\\"" ""\\""                                           /""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\"" ""\\""                                         / /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /                                         ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/                                           ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts """\\"" ""\\""/""\\"" ""\\"".--..--..--..--..--..--..--..--..--.--..--./""\\"" ""\\""/ /".colorize(:light_cyan)
-    puts " ""\\""/ /""\\""/ ../ ../ ../ ../ ../ ../ ../ ../ ../../ ../ /""\\""/ /".colorize(:light_cyan)
-    puts " / /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ ""\\""/ /""\\""/ /""\\""/ /""\\""".colorize(:light_cyan)
-    puts "/ /""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/ ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
-    puts """\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `""\\"" `'""\\"" `'""\\"" `' /".colorize(:light_cyan)
-    puts " `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`-'`--'`--'`--'".colorize(:light_cyan)
+    puts " .--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--.".colorize(:light_cyan)
+    puts "/ .. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\"".. ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /`' /""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\""                                                                /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\""                                                              / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /                                                              ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/                                                                ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\""                                                                /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\""                                                              / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /".colorize(:light_cyan) + "                  PLEASE ADJUST SCREEN SIZE".colorize(:light_white) + "                   ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/".colorize(:light_cyan) + "                      TO FIT ENTIRE BORDER".colorize(:light_white) + "                      ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\".colorize(:light_cyan) + "                  BEFORE STARTING THE PROGRAM".colorize(:light_white) + "                   /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\""                                                              / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /                                                              ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/                                                                ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\".colorize(:light_cyan) + "                        NAVIGATION TIPS:".colorize(:light_white) + "                        /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\".colorize(:light_cyan) + "               ENTER NUMBER TO MAKE SELECTION".colorize(:light_white) + "                 / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /".colorize(:light_cyan) + "                  ENTER 'C' TO VIEW CAUSES".colorize(:light_white) + "                    ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/".colorize(:light_cyan) + "                  ENTER 'P' TO VIEW PROJECTS".colorize(:light_white) + "                    ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\".colorize(:light_cyan) + "                   ENTER 'Q' TO QUIT PROGRAM".colorize(:light_white) + "                    /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\""                                                              / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /                                                              ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/                                                                ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\".colorize(:light_cyan) + "                   PRESS 'ENTER' TO CONTINUE".colorize(:light_white) + "                    /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\""                                                              / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /                                                              ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/                                                                ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\""                                                                /""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\"" ""\\""                                                              / /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /                                                              ""\\"" ""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/                                                                ""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" ""\\""/""\\"" ""\\"".--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--./""\\"" ""\\""/ /".colorize(:light_cyan)
+    puts " ""\\""/ /""\\""/ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ ../ /""\\""/ /".colorize(:light_cyan)
+    puts " / /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""/ /""\\""".colorize(:light_cyan)
+    puts "/ /""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""/""\\"" ""\\""".colorize(:light_cyan)
+    puts """\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `'""\\"" `' /".colorize(:light_cyan)
+    puts " `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'".colorize(:light_cyan)
   end
 end
