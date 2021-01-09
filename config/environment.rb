@@ -3,6 +3,7 @@ require "bundler/setup"
 # require gems first
 require 'colorize'
 require 'pry'
+require 'word_wrap'
 # require models
 require_relative '../lib/api_keys.rb'
 require_relative '../lib/api.rb'

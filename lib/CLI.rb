@@ -37,12 +37,11 @@ class SimplyGive::CLI   # interacts with the user
   
   def get_project # displays instances of charities within cause, prompts answer, gets input until valid?
     space
-    @project_set = get_projects_from_api unless @turn_page == false
+    @project_set = get_projects_from_api
     text("SELECT TO SEE DETAILS OF PROJECTS THAT HELP WITH", :light_cyan)
     text("#{@cause_num}", :light_cyan)
     short_divider
     display_project_names
-    @turn_page = true
     get_project_input_number
   end
   
@@ -56,11 +55,12 @@ class SimplyGive::CLI   # interacts with the user
   end
 
   def show_project_info
+    binding.pry
     text("CHARITY:", :light_cyan)
     text("#{project.charity.name}", :light_white)
     long_divider
     text("PROJECT DESCRIPTION:", :light_cyan)
-    puts "#{project.description}".colorize(:light_white)
+    prj_description_formatting(text: project.description)
     long_divider
     text("RAISED:", :light_cyan)
     text("$#{project.funds_raised} / $#{project.goal}", :light_white)
@@ -79,28 +79,28 @@ class SimplyGive::CLI   # interacts with the user
       sleep(2)
       show_causes
     end
-    check_input(@cause_num)
+    check_input(input: @cause_num)
     @cause_num.to_i.between?(1, total_causes) ? @cause_num = CAUSE.all[@cause_num.to_i - 1].name.upcase : show_causes  # get_cause until match, return input when it does
   end
   
   def get_project_input_number
     @project = gets.strip
-    check_input(@project)
+    check_input(input: @project)
     system("clear") ;show_projects if @project.to_i == @project_set.count + 1
-    @project.to_i.between?(1, @project_set.count) ? @project = @project_set[@project.to_i - 1] : @turn_page = false ;show_projects
+    @project.to_i.between?(1, @project_set.count) ? @project = @project_set[@project.to_i - 1] : show_projects
   end
   
   def next_steps  # Ask for next step. Go to site or back or exit
     space
     puts "Enter ".colorize(:light_white) + "'g'".colorize(:light_red) + " to simply give".colorize(:light_white)
     input = gets.strip.downcase
-    check_input(input)
+    check_input(input: input)
     if input == "g"
       system("open", project.project_link)
     end
   end
 
-  def check_input(input) # checks for exit, causes, or projects
+  def check_input(input:) # checks for exit, causes, or projects
     case input.downcase
     when "q"
       exit
@@ -128,6 +128,12 @@ class SimplyGive::CLI   # interacts with the user
     width = 79
     center_text = (width - text.length) / 2
     puts " " * center_text + text.colorize(color)
+  end
+
+  def prj_description_formatting(text:)
+    line = WordWrap.ww text, 59
+    line = line.split("\n")
+    line.each {|l| text(l, :light_white)}
   end
 
 
