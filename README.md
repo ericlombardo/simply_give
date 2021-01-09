@@ -9,39 +9,20 @@ charity's website where you Simply Give to the cause.
 
 ## Installation
 
-Clone the git repo onto your computer
+* Clone the git repository onto your computer
 
-![](lib/images/clone.png)
+* Get an API key from Global Giving (https://www.globalgiving.org/api/)
 
-Go into the root directory of the folder (files should include)
+* Put your API key in lib/api_key.rb inside the method and save
+insert pic here
+    
 
-![](lib/images/folder_files.png)
-
-Once there, run program by executeing:
+Go to the command line and execute:
+    $ bundle install
+    
+Once there, run program by executing:
 
     $ ./bin/simply_give
-
-
-<!-- Once there execute:
-
-    $ bundle install
-   ![](lib/images/bundle_install.png)
-     -->
-
-
-<!-- Add this line to your application's Gemfile:
-
-```ruby
-gem 'simply_give'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install simply_give -->
 
 ## Usage
 
@@ -62,7 +43,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/ericlombardo/simply_give. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/ericlombardo/simply_give/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/ericlombardo/simply_give. 
+Please review the [Contributing Guidelines](https://github.com/ericlombardo/simply_give/blob/master/CONTRIBUTING.md) to make sure everyone is following the proper formating.
 
 
 ## License
