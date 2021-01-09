@@ -11,13 +11,17 @@ charity's website where you Simply Give to the cause.
 
 * Clone the git repository onto your computer
 
+
 * Get an API key from Global Giving (https://www.globalgiving.org/api/)
 
+
 * Put your API key in lib/api_key.rb inside the method and save
-insert pic here
+   
+   ![](lib/images/api_key.png)
     
 
 Go to the command line and execute:
+
     $ bundle install
     
 Once there, run program by executing:
@@ -28,7 +32,7 @@ Once there, run program by executing:
 
 Upon launching the program you will be prompted to adjust the screen to the optimal size to make sure you can see the edges of the border. 
 
-![](lib/images/adjust_size.png) INSERT PICTURE OF BORDER
+![](lib/images/border.png)
 
 After this, the program starts and you are able to view projects by selecting a cause. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
 
