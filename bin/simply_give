@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require_relative '../config/environment.rb'
 
-SimplyGive::CLI.new.call
+SimplyGive::CLI.new.start
