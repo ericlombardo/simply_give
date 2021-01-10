@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'httparty'
   spec.add_dependency 'colorize'
   spec.add_dependency 'word_wrap'
+  spec.add_dependency 'launchy', '~> 2.5'
 end

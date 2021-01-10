@@ -4,6 +4,7 @@ require "bundler/setup"
 require 'colorize'
 require 'pry'
 require 'word_wrap'
+require 'launchy'
 # require models
 require_relative '../lib/api_keys.rb'
 require_relative '../lib/api.rb'
