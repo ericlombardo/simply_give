@@ -51,8 +51,8 @@ class SimplyGive::CLI   # interacts with the user
     else 
       @project_set.each.with_index(1) {|proj, ind| text("#{ind}. #{proj.name}", :light_white)}    # iterates through and puts
     end
-    
-    text("#{@project_set.count + 1}. See More Projects", :light_white) if API.next_page != nil   # puts See More if there is another page
+
+    text("11. See More Projects", :light_white) if @project_set.count == 10 && API.next_page.is_a?(String)     # puts See More if there is another page
     get_project_input_number    # executes next method
   end
   
@@ -87,8 +87,8 @@ class SimplyGive::CLI   # interacts with the user
     long_divider
     text("READY TO SIMPLY GIVE TO THIS PROJECT/CAUSE?", :light_yellow)
     space
-    text("1. GO TO PROJECT SITE TO DONATE", :light_yellow)
-    text("2. GO DIRECTLY TO CHARITY SITE TO DONATE", :light_yellow)
+    text("1. DONATE TO PROJECT", :light_yellow)
+    text("2. DONATE TO CHARITY", :light_yellow)
     input = gets.strip.downcase
     nav_check(input: input)
     show_project_info until input.to_i.between?(1, 2)
@@ -124,21 +124,21 @@ class SimplyGive::CLI   # interacts with the user
     CAUSE.all.count
   end
   
-  def cause_name
+  def cause_name    # converts cause name into formatted string
     CAUSE.all[@cause_name.to_i - 1].name.upcase
   end
 
-  def get_projects_from_api
+  def get_projects_from_api   # sends request to API for projects
     API.new.get_projects(cause: CAUSE.all[@cause_name.to_i - 1], next_page: API.next_page)
   end 
 
-  def text(text, color = :light_white)   
+  def text(text, color = :light_white)   # formats text to display centered and colorized
     width = 79
     center_text = (width - text.length) / 2
     puts " " * center_text + text.colorize(color)
   end
 
-  def prj_descr_format(text:)
+  def prj_descr_format(text:)     # formats the description to split into 'sentences', and display centered
     line = WordWrap.ww text, 59
     line.split("\n").each {|l| text(l, :light_white)}
   end

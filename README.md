@@ -34,7 +34,7 @@ Upon launching the program you will be prompted to adjust the screen to the opti
 
 ![](lib/images/border.png)
 
-After this, the program starts and you are able to view projects by selecting a cause. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into.
+After this, the program starts and you are able to view projects by selecting a cause. After you have entered a cause you are interested in, you are able to jump back to the main menu and select a different cause to look into. You may need to scroll to see some of the content of the projects depending on the length of the descriptions. 
 
 ## Build Status
 While Simply Give is up and fully functional, there are features that I would like to incorporate in the future. I would like to include a way to search by regions, track donations in an external file, and create person instances to expand the usability of the program.

@@ -1,5 +1,5 @@
 require_relative '../config/environment.rb'    
-require 'httparty'
+require 'httparty'  # required for the get request to API
 
 class SimplyGive::API
   
@@ -24,7 +24,7 @@ class SimplyGive::API
     full_url = URL + cause.id + ACTV_PRJ + KEY  # uses args to build the entire base url for API requests
 
     @@next_page == nil ? data = HTTParty.get(full_url) :          # checks @@next_page, if nil gets first set, else gets set with nextOrgId
-    data = HTTParty.get(full_url + "&nextProjectId=#{next_page}")
+    data = HTTParty.get(full_url + "&nextProjectId=#{@@next_page}")
 
     data["projects"]["hasNext"] == "true" ?                       # assigns @@next_page variable according to hasNext value
     @@next_page = data["projects"]["nextProjectId"] : nil
@@ -37,12 +37,9 @@ class SimplyGive::API
       n_prj = SimplyGive::Project.new(name: prj["title"]) # create and assign values for each project
       n_prj.description = prj["summary"]
       n_prj.status = prj["status"]
-      n_prj.region = prj["region"]
       n_prj.goal = prj["goal"]
       n_prj.funds_raised = prj["funding"]
-      n_prj.progress_report = prj["progressReportLink"]
       n_prj.project_link = prj["projectLink"]
-      n_prj.start_date = prj["approvedDate"].slice(/.{10}/)
 
       n_prj.charity = SimplyGive::Charity.new(name: prj["organization"]["name"]).tap do |org|   # create and assign values for charity
         org.state = prj["organization"]["state"]
