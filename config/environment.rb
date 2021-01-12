@@ -1,6 +1,7 @@
 require "bundler/setup"
 
 # require gems first
+require 'httparty'
 require 'colorize'
 require 'pry'
 require 'word_wrap'

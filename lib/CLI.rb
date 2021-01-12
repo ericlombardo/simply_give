@@ -1,5 +1,3 @@
-require_relative '../config/environment.rb'
-
 class SimplyGive::CLI   # interacts with the user
   attr_accessor :cause_name, :project_set, :project, :turn_page
 
@@ -51,7 +49,7 @@ class SimplyGive::CLI   # interacts with the user
     else 
       @project_set.each.with_index(1) {|proj, ind| text("#{ind}. #{proj.name}", :light_white)}    # iterates through and puts
     end
-
+    # SimplyGive::Project.find_by_name("farming")             USED FOR ASSESSMENT
     text("11. See More Projects", :light_white) if @project_set.count == 10 && API.next_page.is_a?(String)     # puts See More if there is another page
     get_project_input_number    # executes next method
   end

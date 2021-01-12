@@ -1,6 +1,3 @@
-require_relative '../config/environment.rb'    
-require 'httparty'  # required for the get request to API
-
 class SimplyGive::API
   
   URL = "https://api.globalgiving.org/api/public/projectservice/themes/"    # base url for api requests
